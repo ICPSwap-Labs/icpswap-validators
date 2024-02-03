@@ -8,7 +8,7 @@ This validator verifies that the receiving principal is listed in the whitelist.
 
 Only the controller and governance canister can call the `add_whitelist` and `remove_whitelist` methods to add or remove principals from the whitelist.
 
-Only the controller can set the governance canister ID by using the `set_governance_canister_id` method.
+You can set the governance canister ID when you install the canister.
 
 You can implement your own validation logic, as long as the validator's arguments and return values are the same.
 
@@ -18,7 +18,7 @@ vessel install
 dfx start --background
 dfx canister create --network ic TransferPositionValidator
 dfx build TransferPositionValidator --network ic
-dfx canister install --network ic TransferPositionValidator
+dfx canister install --network ic TransferPositionValidator --argument="(opt principal \"$GOVERNANCE_CANISTER_ID\")"
 ```
 ## Proposal to register generic function
 Initially, you need to register the `transferPosition` function of SwapPool as a GenericNervousSystemFunction. You can submit a proposal to register the GenericNervousSystemFunction as follows.
