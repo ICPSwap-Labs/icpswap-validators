@@ -41,7 +41,7 @@ actor class TransferPositionValidator(governance_id: ?Principal) {
         return whitelist;
     };
     public shared func validate_add_whitelist(principal: Principal): async Result {
-        return #Ok("ok");
+        return #Ok(Principal.toText(principal));
     };
     public shared({caller}) func remove_whitelist(principal: Principal): async [Principal] {
         assert(Prim.isController(caller) or is_governance_canister(caller));
@@ -55,7 +55,7 @@ actor class TransferPositionValidator(governance_id: ?Principal) {
         return whitelist;
     };
     public shared func validate_remove_whitelist(principal: Principal): async Result {
-        return #Ok("ok");
+        return #Ok(Principal.toText(principal));
     };
     public query func get_whitelist(): async [Principal] {
         return whitelist;
@@ -64,7 +64,7 @@ actor class TransferPositionValidator(governance_id: ?Principal) {
     public shared({caller}) func validate_transfer_position(from : Principal, to : Principal, positionId : Nat): async Result {
         for (it in whitelist.vals()) {
             if (Principal.equal(it, to)) {
-                return #Ok("ok");
+                return #Ok(Principal.toText(from) # ", " # Principal.toText(to) # ", " # Nat.toText(positionId));
             }
         };
         return #Err("the recipient is not on the whitelist.");
